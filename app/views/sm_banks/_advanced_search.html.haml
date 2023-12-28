@@ -1,0 +1,21 @@
+= form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+  .control-group
+    = label_tag "SMB Code", "SMB Code", :class => 'control-label'
+    = text_field_tag :code, params[:code]
+  .control-group
+    = label_tag "Enabled?", "Enabled?", :class => 'control-label'
+    = select_tag :is_enabled, options_for_select([['Yes','Y'],['No','N']],params[:is_enabled]),:prompt => "ANY"
+  .control-group
+    = label_tag "Name", "Name", :class => 'control-label'
+    = text_field_tag :name, params[:name]
+  .control-group
+    = label_tag "SMB IFSC Code", "SMB IFSC Code", :class => 'control-label'
+    = text_field_tag :bank_code, params[:bank_code]
+    = hidden_field_tag :approval_status, params[:approval_status]
+  .form-actions
+    = submit_tag "Search", :name => nil, :class => 'btn btn-primary', :id => "adv_search_button"
+    = button_tag "Reset", :type => 'button', :value=>'Reset', :class => 'btn', :id => 'adv_search_reset_button'
+  = hidden_field_tag :advanced_search, :true
+
+:javascript
+  var in_advanced_search = true;

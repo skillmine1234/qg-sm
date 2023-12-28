@@ -1,0 +1,37 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8;'}
+    #form-details
+      = form_for "audit_logs", :url => "", :method => :get do |f|
+        %h3{:style => 'display:inline;'} 
+          = "Values at version" 
+          = select_tag :version_id, options_for_select(version_ids(@sm_bank),params[:version_id]), :prompt => 'Select'
+          = submit_tag "Show", :name => nil, :class => "btn btn-primary"
+      %br
+      - unless @audit.nil?
+        %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+          %tr
+            %th Field
+            %th Old Value
+            %th New Value
+          %tr
+            %td.label 
+              = "Change Done By"
+            %td.value
+              = " " 
+            %td.value
+              = @audit.user.username
+          %tr
+            %td.label 
+              = "Action"
+            %td.value
+              = " " 
+            %td.value
+              = @audit.action
+          - @audit.audited_changes.each do |change,value|
+            %tr
+              %td.label 
+                = change
+              %td.value
+                = old_values(value)
+              %td.value
+                = new_values(value)

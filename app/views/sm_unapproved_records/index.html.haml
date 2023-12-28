@@ -1,0 +1,21 @@
+%br
+%h1 SM Unapproved Records
+%br
+- unless @records.nil?
+  %br
+  = "Total Count: #{@records.count}"
+  = will_paginate @records
+  %br
+  %table.table.table-bordered.table-striped.table-hover
+    .thead
+      %th{:style=>'text-align:left; background-color: lightblue;'}
+        Record Type
+      %th{:style=>'text-align:left; background-color: lightblue;'}
+        Record Count
+    .tbody
+      - @records.each do |record|
+        %tr
+          %td{:style=>'text-align:left;'}
+            = record[:record_type]
+          %td{:style=>'text-align:left;'}
+            = link_to record[:record_count], {:controller => record[:record_type].tableize, :action => :index, :approval_status => 'U'}

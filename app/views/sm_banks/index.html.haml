@@ -1,0 +1,70 @@
+%br
+= link_to 'New Sub Member Bank', new_sm_bank_path
+%br
+%br
+%h1 Listing Sub Member Banks
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@sm_banks_count}"
+%br
+= will_paginate @sm_banks
+%br
+
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Enabled?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      SMB Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Name
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      SMB IFSC Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Low Balance Alert At
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Identity User ID
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      NEFT Allowed?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      IMPS Allowed?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      RTGS Allowed?
+
+  .tbody
+    - @sm_banks.each do |sm_bank|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', sm_bank
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_sm_bank_path(sm_bank)
+        %td{:style=>'text-align:left;'}
+          = sm_bank.is_enabled
+        %td{:style=>'text-align:left;'}
+          = sm_bank.code
+        %td{:style=>'text-align:left; word-break: break-word; width: 20%;'}
+          = sm_bank.name
+        %td{:style=>'text-align:left;'}
+          = sm_bank.bank_code
+        %td{:style=>'text-align:left;'}
+          = sm_bank.low_balance_alert_at
+        %td{:style=>'text-align:left;'}
+          = sm_bank.identity_user_id
+        %td{:style=>'text-align:left;'}
+          = sm_bank.neft_allowed
+        %td{:style=>'text-align:left;'}
+          = sm_bank.imps_allowed
+        %td{:style=>'text-align:left;'}
+          = sm_bank.rtgs_allowed
+
+:javascript
+  $(document).ready(function(){
+    $('input[type="text"]'). attr("placeholder", "Multisearch Search Enabled");
+  });
+

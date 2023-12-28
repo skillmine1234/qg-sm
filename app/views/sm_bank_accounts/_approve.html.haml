@@ -1,0 +1,15 @@
+- can = can? :approve, @record
+- approve_flag = @record.enable_approve_button?
+%a.btn{"data-toggle" => "modal", :href => "#{!(can && approve_flag) ? '#' : '#myModalApprove'}", :role => "button", :class => "btn btn-primary #{(can && approve_flag) ? '' : 'disabled'}"} Approve
+.modal.hide.fade{"id" => "myModalApprove", "aria-hidden" => "true", "aria-labelledby" => "  myModalLabel", :role => "dialog", :tabindex => "-1"}
+  .modal-header
+    %button.close{"aria-hidden" => "true", "data-dismiss" => "modal", :type => "button"} ×
+    %h3#myModalLabel  Approve
+    #error_message{:style => 'color:red'}
+  .modal-body
+    = simple_form_for @record, :url => {:action => 'approve'}, :method => :get, :html=>{:id=>"transition"} do |ef|
+      = ef.input :updated_by, :as => :hidden, :input_html => {:value => current_user.id}
+      = submit_tag "Approve", :class=>"btn btn-primary transition_button", :id => "transition_button"
+%p{:style => 'color:green;'}
+  = created_or_edited_by(@record)
+%br

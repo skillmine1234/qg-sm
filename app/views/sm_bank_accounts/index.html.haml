@@ -1,0 +1,57 @@
+%br
+= link_to 'New Sub Member Bank Account', new_sm_bank_account_path
+%br
+%br
+%h1 Listing Sub Member Bank Accounts
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@sm_bank_accounts_count}"
+%br
+= will_paginate @sm_bank_accounts
+%br
+
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Enabled?
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Sub Member Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Customer ID
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Account No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      MMID
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Mobile No
+
+  .tbody
+    - @sm_bank_accounts.each do |sm_bank_account|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', sm_bank_account
+        %td{:style=>'text-align:left;'}
+          = link_to 'Edit', edit_sm_bank_account_path(sm_bank_account)
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.is_enabled
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.sm_code
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.customer_id
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.account_no
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.mmid
+        %td{:style=>'text-align:left;'}
+          = sm_bank_account.mobile_no
+
+:javascript
+  $(document).ready(function(){
+    $('input[type="text"]'). attr("placeholder", "Multisearch Search Enabled");
+  });

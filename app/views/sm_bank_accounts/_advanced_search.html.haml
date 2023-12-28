@@ -1,0 +1,21 @@
+= form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+  .control-group
+    = label_tag "Sub Member Code", "Sub Member Code", :class => 'control-label'
+    = text_field_tag :sm_code, params[:sm_code]
+  .control-group
+    = label_tag "Enabled?", "Enabled?", :class => 'control-label'
+    = select_tag :is_enabled, options_for_select([['Yes','Y'],['No','N']],params[:is_enabled]),:prompt => "ANY"
+  .control-group
+    = label_tag "Customer ID", "Customer ID", :class => 'control-label'
+    = text_field_tag :customer_id, params[:customer_id]
+  .control-group
+    = label_tag "Account No", "Account No", :class => 'control-label'
+    = text_field_tag :account_no, params[:account_no]
+    = hidden_field_tag :approval_status, params[:approval_status]
+  .form-actions
+    = submit_tag "Search", :name => nil, :class => 'btn btn-primary', :id => "adv_search_button"
+    = button_tag "Reset", :type => 'button', :value=>'Reset', :class => 'btn', :id => 'adv_search_reset_button'
+  = hidden_field_tag :advanced_search, :true
+
+:javascript
+  var in_advanced_search = true;

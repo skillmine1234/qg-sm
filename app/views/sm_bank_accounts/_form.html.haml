@@ -1,0 +1,55 @@
+= simple_form_for @sm_bank_account, :html => {:class=>'form-horizontal', :autocomplete=>"off", :id => "sm_bank_account_form"} do |f|
+  .control-group
+    = f.label ' '
+    #msg-error
+      = error_message_for(@sm_bank_account, :base, :prepend_text => "")
+  .form-main{:style => "width: 100%;"}
+    = f.hidden_field :lock_version
+    = f.hidden_field :approved_id
+    = f.hidden_field :approved_version
+    .control-group
+      = f.label :is_enabled, "Enabled?", :class => 'control-label'
+      - if f.object.is_enabled.nil?
+        = f.check_box :is_enabled, {:checked => "checked"},"Y","N"
+      - else 
+        = f.check_box :is_enabled, {},"Y","N"
+      #msg-error
+        = error_message_for(@sm_bank, :is_enabled, :prepend_text => "")
+    - if f.object.sm_code.present?
+      .control-group
+        = f.label :sm_code, "*Sub Member Code", :class => 'control-label'
+        = f.text_field :sm_code, readonly: true
+        #msg-error
+          = error_message_for(@sm_bank_account, :sm_code, :prepend_text => "")
+    - else
+      .control-group
+        = f.label :sm_code, "*Sub Member Code", :class => 'control-label'
+        = f.select(:sm_code, sm_banks_for_select, :prompt => 'Select')
+        #msg-error
+          = error_message_for(@sm_bank_account, :sm_code, :prepend_text => "")
+    .control-group
+      = f.label :customer_id, "*Customer ID", :class => 'control-label'
+      = f.text_field :customer_id, :minlength => 3, :maxlength => 15, :required => true
+      #msg-error
+        = error_message_for(@sm_bank_account, :customer_id, :prepend_text => "")
+    .control-group
+      = f.label :account_no, "*Account No", :class => 'control-label'
+      = f.text_field :account_no, :minlength => 1, :maxlength => 15, :required => true
+      #msg-error
+        = error_message_for(@sm_bank_account, :account_no, :prepend_text => "")
+    .control-group
+      = f.label :mmid, "MMID", :class => 'control-label'
+      = f.text_field :mmid, :minlength => 7, :maxlength => 7
+      #msg-error
+        = error_message_for(@sm_bank_account, :mmid, :prepend_text => "")
+    .control-group
+      = f.label :mobile_no, "Mobile No", :class => 'control-label'
+      = f.text_field :mobile_no, :minlength => 10, :maxlength => 10
+      #msg-error
+        = error_message_for(@sm_bank_account, :mobile_no, :prepend_text => "")
+    
+  .form-actions
+    - (f.object.new_record? and f.object.sm_code.nil?) ? label_name = "Create" : label_name = "Update"
+    = f.button "submit" ,:class=>"btn btn-primary", :id => 'submit_sm_bank_account', :value => label_name + ' Sub Member Bank Account'
+    = link_to :Cancel,'/sm_bank_accounts', :name => 'cancel', :class=>"cancel btn"
+

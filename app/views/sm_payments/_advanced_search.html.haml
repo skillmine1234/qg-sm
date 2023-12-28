@@ -1,0 +1,55 @@
+= form_tag '', :method => 'get', :class => 'form-horizontal', :autocomplete=>"off" do
+  .control-group
+    = label_tag "Request No", "Request No", :class => 'control-label'
+    = text_field_tag :req_no, params[:req_no],placeholder: 'Multisearch Search Enabled'
+  - if current_user.present? && current_user.try(:accessible_customers).try(:count) != 1
+    .control-group
+      = label_tag "Customer ID", "Customer ID", :class => 'control-label'
+      = text_field_tag :customer_id, params[:customer_id],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Status Code", "Status Code", :class => 'control-label'
+    = select_tag :status_code, options_for_select([['FAILED','FAILED'],['COMPLETED','COMPLETED'],['IN_PROCESS','IN_PROCESS'],['SENT_TO_BENEFICIARY','SENT_TO_BENEFICIARY'],['RETURNED_FROM_BENEFICIARY','RETURNED_FROM_BENEFICIARY'],['SCHEDULED_FOR_NEXT_WORKDAY','SCHEDULED_FOR_NEXT_WORKDAY']],params[:status_code]),:prompt => 'ANY'
+  .control-group
+    = label_tag "Attempt No", "Attempt No", :class => 'control-label'
+    = number_field_tag :attempt_no, params[:attempt_no],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Transfer Type", "Transfer Type", :class => 'control-label'
+    = select_tag :transfer_type, options_for_select([['NEFT','NEFT'],['IMPS','IMPS'],['RTGS','RTGS'],['FT','FT']],params[:transfer_type]),:prompt => 'ANY'
+  .control-group
+    = label_tag "Partner Code", "Partner Code", :class => 'control-label'
+    = number_field_tag :partner_code, params[:partner_code],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Debit Account No", "Debit Account No", :class => 'control-label'
+    = number_field_tag :debit_account_no, params[:debit_account_no],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Remitter Account No", "Remitter Account No", :class => 'control-label'
+    = number_field_tag :rmtr_account_no, params[:rmtr_account_no],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Remitter Account IFSC", "Remitter Account IFSC", :class => 'control-label'
+    = number_field_tag :rmtr_account_ifsc, params[:rmtr_account_ifsc],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Beneficiary Account Number", "Beneficiary Account Number", :class => 'control-label'
+    = number_field_tag :bene_account_no, params[:bene_account_no],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Bank Reference No", "Bank Reference No", :class => 'control-label'
+    = number_field_tag :bank_ref_no, params[:bank_ref_no],placeholder: 'Multisearch Search Enabled'
+  .control-group
+    = label_tag "Request Timestamp", "Request Timestamp", :class => 'control-label'
+    = date_field_tag(:from_req_timestamp, params[:from_req_timestamp])
+    To
+    = date_field_tag(:to_req_timestamp, params[:to_req_timestamp])
+  .control-group
+    = label_tag "Reply Timestamp", "Reply Timestamp", :class => 'control-label'
+    = date_field_tag(:from_rep_timestamp, params[:from_rep_timestamp])
+    To
+    = date_field_tag(:to_rep_timestamp, params[:to_rep_timestamp])
+  .form-actions
+    = button_tag "Search", :class => 'btn btn-primary'
+    = button_tag "Reset", :type => 'button', :value=>'Reset', :class => 'btn', :id => 'sm_paymment_reset'
+  = hidden_field_tag :advanced_search, :true
+
+
+:javascript
+  $("#sm_paymment_reset").click(function() {
+    $(this).closest('form').find("input,select").val("");
+  });

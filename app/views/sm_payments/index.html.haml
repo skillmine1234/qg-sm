@@ -1,0 +1,67 @@
+/ - index_model = SmPayment
+/ - index_columns = [:req_no, :status_code, :customer_id, :partner_code, :debit_account_no, :rmtr_account_no, :rmtr_account_ifsc, :transfer_type, :req_timestamp, :rep_timestamp, :attempt_no,  :user_action]
+
+/ = render partial: 'shared/index', locals: {index_model: index_model, index_columns: index_columns, records: @records
+
+
+%h1 Listing Sm payments
+%h2.collapsible
+  Advanced Search
+  %span.caret
+.collapsible-content
+  = render :partial => 'advanced_search'
+%br
+= "Total Count: #{@sm_payments.count}"
+= will_paginate @sm_payments, :page_links => true
+%br
+%table.table.table-bordered.table-striped.table-hover
+  .thead
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request No  
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Status Code
+    - if current_user.present? && current_user.try(:accessible_customers).try(:count) != 1
+      %th{:style=>'text-align:left; background-color: lightblue;'}
+        Customer ID 
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Partner Code
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Debit Account No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Remitter Account No
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Remitter Account IFSC
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Request Timestamp
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Reply Timestamp
+    %th{:style=>'text-align:left; background-color: lightblue;'}
+      Attempt No
+
+  .tbody
+    - @sm_payments.each do |sm_payment|
+      %tr
+        %td{:style=>'text-align:left;'}
+          = link_to 'Show', sm_payment
+        %td{:style=>'text-align:left;'}
+          = sm_payment.req_no
+        %td{:style=>'text-align:left;'}
+          = render partial: 'shared/status', locals: {id: "#{sm_payment.class.name.demodulize}_status_code_#{sm_payment.id}", object: sm_payment}
+        - if current_user.present? && current_user.try(:accessible_customers).try(:count) != 1
+          %td{:style=>'text-align:left;'}
+            = sm_payment.customer_id
+        %td{:style=>'text-align:left;'}
+          = sm_payment.partner_code
+        %td{:style=>'text-align:left;'}
+          = sm_payment.debit_account_no
+        %td{:style=>'text-align:left;'}
+          = sm_payment.rmtr_account_no
+        %td{:style=>'text-align:left;'}
+          = sm_payment.rmtr_account_ifsc
+        %td{:style=>'text-align:left;'}
+          = sm_payment.req_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p")
+        %td{:style=>'text-align:left;'}
+          = sm_payment.rep_timestamp.try(:strftime, "%d/%m/%Y %I:%M%p")
+        %td{:style=>'text-align:left;'}
+          = sm_payment.attempt_no

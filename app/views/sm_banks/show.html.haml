@@ -1,0 +1,105 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8; height: 900px;'}
+    #form-details
+      %h3 Sub Member Bank Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @sm_bank
+        %a.btn{:href => "#{!(can) ? '#' : '/sm_banks/' + @sm_bank.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'unapproved_records/approve_and_resend', :@record => @sm_bank
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@sm_bank.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@sm_bank)}", :controller => :sm_banks, :action => :audit_logs, :version_id => audit_count(@sm_bank), :id => @sm_bank.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@sm_bank, :base, :prepend_text => "")
+          %tr
+            %td.label Enabled?
+            %td.value
+              = @sm_bank.is_enabled
+            %td#msg-error
+              = error_message_for(@sm_bank, :is_enabled, :prepend_text => "")
+          %tr
+            %td.label SMB Code
+            %td.value
+              = @sm_bank.code
+            %td#msg-error
+              = error_message_for(@sm_bank, :code, :prepend_text => "")
+          %tr
+            %td.label Name
+            %td.value
+              = @sm_bank.name
+            %td#msg-error
+              = error_message_for(@sm_bank, :name, :prepend_text => "")
+          %tr
+            %td.label SMB IFSC Code
+            %td.value
+              = @sm_bank.bank_code
+            %td#msg-error
+              = error_message_for(@sm_bank, :bank_code, :prepend_text => "")
+          %tr
+            %td.label Low Balance Alert At
+            %td.value
+              = @sm_bank.low_balance_alert_at
+            %td#msg-error
+              = error_message_for(@sm_bank, :low_balance_alert_at, :prepend_text => "")
+          %tr
+            %td.label Identity User ID
+            %td.value
+              = @sm_bank.identity_user_id
+            %td#msg-error
+              = error_message_for(@sm_bank, :identity_user_id, :prepend_text => "")
+          %tr
+            %td.label NEFT Allowed?
+            %td.value
+              = @sm_bank.neft_allowed
+            %td#msg-error
+              = error_message_for(@sm_bank, :neft_allowed, :prepend_text => "")
+          %tr
+            %td.label IMPS Allowed?
+            %td.value
+              = @sm_bank.imps_allowed
+            %td#msg-error
+              = error_message_for(@sm_bank, :imps_allowed, :prepend_text => "")
+          %tr
+            %td.label RTGS Allowed?
+            %td.value
+              = @sm_bank.rtgs_allowed
+            %td#msg-error
+              = error_message_for(@sm_bank, :rtgs_allowed, :prepend_text => "")
+          %tr
+            %td.label Notification Sent At
+            %td
+              = @sm_bank.notification_sent_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@sm_bank, :notification_sent_at, :prepend_text => "")
+          %tr
+            %td.label Created By
+            %td.value
+              = @sm_bank.created_user.try(:username)
+            %td#msg-error
+              = error_message_for(@sm_bank, :created_by, :prepend_text => "")
+          %tr
+            %td.label Updated By
+            %td.value
+              = @sm_bank.updated_user.try(:username)
+            %td#msg-error
+              = error_message_for(@sm_bank, :updated_by, :prepend_text => "")
+          %tr
+            %td.label Created At
+            %td.value
+              = @sm_bank.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@sm_bank, :created_at, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @sm_bank.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@sm_bank, :updated_at, :prepend_text => "")

@@ -1,0 +1,81 @@
+.form-horizontal.show_form
+  .form-main-with-color{:style=>'background-color: #F1F2F8; height: 900px;'}
+    #form-details
+      %h3 Sub Member Bank Account Details 
+      %br
+      %p{:style => 'text-align:left; padding-left:6px; padding-bottom:17px'}
+        - can = can? :edit, @sm_bank_account
+        %a.btn{:href => "#{!(can) ? '#' : '/sm_bank_accounts/' + @sm_bank_account.id.to_s + '/edit'}", :role => "button", :class => "btn btn-primary #{(can) ? '' : 'disabled'}"} Edit
+        = render 'approve', :@record => @sm_bank_account
+      %table.table.no-border{:style=>"table-layout: fixed; width: 100%;"}
+        - if !@sm_bank_account.nil?
+          %tr
+            %td.label Version
+            %td.value
+              = link_to "#{audit_count(@sm_bank_account)}", :controller => :sm_bank_accounts, :action => :audit_logs, :version_id => audit_count(@sm_bank_account), :id => @sm_bank_account.id
+          %tr
+            %td.label Form Errors
+            %td.value
+              = ' '
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :base, :prepend_text => "")
+          %tr
+            %td.label Enabled?
+            %td.value
+              = @sm_bank_account.is_enabled
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :is_enabled, :prepend_text => "")
+          %tr
+            %td.label Sub Member Code
+            %td.value
+              = @sm_bank_account.sm_code
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :sm_code, :prepend_text => "")
+          %tr
+            %td.label Customer ID
+            %td.value
+              = @sm_bank_account.customer_id
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :customer_id, :prepend_text => "")
+          %tr
+            %td.label Account No
+            %td.value
+              = @sm_bank_account.account_no
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :account_no, :prepend_text => "")
+          %tr
+            %td.label MMID
+            %td.value
+              = @sm_bank_account.mmid
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :mmid, :prepend_text => "")
+          %tr
+            %td.label Mobile No
+            %td.value
+              = @sm_bank_account.mobile_no
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :mobile_no, :prepend_text => "")
+          %tr
+            %td.label Created By
+            %td.value
+              = @sm_bank_account.created_user.try(:username)
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :created_by, :prepend_text => "")
+          %tr
+            %td.label Updated By
+            %td.value
+              = @sm_bank_account.updated_user.try(:username)
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :updated_by, :prepend_text => "")
+          %tr
+            %td.label Created At
+            %td.value
+              = @sm_bank_account.created_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :created_at, :prepend_text => "")
+          %tr
+            %td.label Updated At
+            %td.value
+              = @sm_bank_account.updated_at.try(:strftime, "%d/%m/%Y %I:%M%p")
+            %td#msg-error
+              = error_message_for(@sm_bank_account, :updated_at, :prepend_text => "")

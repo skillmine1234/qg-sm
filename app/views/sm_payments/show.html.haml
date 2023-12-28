@@ -1,0 +1,184 @@
+/ - panel = [[],[],[]]
+/ - panel[0] << {title: 'Request', height: '170px', fields: [:request, :partner_code, :req_timestamp]}
+/ - panel[0] << {title: 'Request', height: '170px', fields: [:reply, :status_code, :bank_ref_no, :rep_timestamp, :reconciled_at, :steps]}
+/ - panel[1] << {title: 'Request Details', height: '300px', fields: [:req_version, :customer_id, :debit_account_no, :rmtr_account_no, :rmtr_account_ifsc, :transfer_type, :req_transfer_type]}
+/ - panel[1] << {title: '', height: '300px', fields: [:transfer_ccy, :transfer_amount, :bene_account_no, :bene_account_ifsc, :cbs_req_ref_no, :rmtr_to_bene_note]}
+/ - panel[2] << {title: 'Remitter Details', height: '400px', fields: [:rmtr_full_name, :rmtr_address1, :rmtr_address2, :rmtr_address3, :rmtr_postal_code, :rmtr_city, :rmtr_state, :rmtr_country, :rmtr_email_id, :rmtr_mobile_no]}
+/ - panel[2] << {title: 'Beneficiary Details', height: '400px', fields: [:bene_full_name, :bene_address1, :bene_address2, :bene_address3, :bene_postal_code, :bene_city, :bene_state, :bene_country, :bene_email_id, :bene_mobile_no]}
+
+/ = render partial: 'shared/show', locals: {record: @record, toolbar: nil, panel: panel}
+
+
+- unless @sm_payment.nil?
+  .show_ticket      
+    .header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 158px; display: inline-block;'}
+      %h3
+        Request:
+        = @sm_payment.request
+      %h3
+        Partner Code:
+        = @sm_payment.partner_code
+      %h3
+        Request Timestamp:
+        = @sm_payment.req_timestamp
+    .header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 158px; display: inline-block;'}
+      %h3 
+        Reply:
+        = @sm_payment.reply
+      %h3 
+        Status Code:
+        = @sm_payment.status_code
+      %h3
+        Bank Reference No:
+        = @sm_payment.bank_ref_no
+      %h3
+        Reply Timestamp:
+        = @sm_payment.rep_timestamp
+      %h3
+        Reconciled At:
+        = @sm_payment.reconciled_at
+      %h3
+        Steps:
+        = link_to 'Show',steps_sm_payment_path(id: @sm_payment.id)
+    .header-form-main{:style=>'background-color: #ecf5fa; width: 50%; height: 300px; display: inline-block;'}
+      #ticket-details
+        %h3
+          Request Details
+        %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+          %tr
+            %td.label Request Version
+            %td.value
+              = @sm_payment.req_version
+          %tr
+            %td.label Customer ID
+            %td.value
+              = @sm_payment.customer_id
+          %tr
+            %td.label Debit Account No
+            %td.value
+              = @sm_payment.debit_account_no
+          %tr
+            %td.label Remitter Account No
+            %td.value
+              = @sm_payment.rmtr_account_no
+          %tr
+            %td.label Remitter Account IFSC
+            %td.value
+              = @sm_payment.rmtr_account_ifsc
+          %tr
+            %td.label Transfer Type
+            %td.value
+              = @sm_payment.transfer_type
+          %tr
+            %td.label Request Transfer Type
+            %td.value
+              = @sm_payment.req_transfer_type
+    .header-form-main{:style=>'background-color: #ecf5fa; width: 50%; height: 300px; display: inline-block;'}
+      #ticket-details
+        %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+          %tr
+            %td.label Transfer Currency
+            %td.value
+              = @sm_payment.transfer_ccy
+          %tr
+            %td.label Transfer Amount
+            %td.value
+              = @sm_payment.transfer_amount
+          %tr
+            %td.label Beneficiary Account Number
+            %td.value
+              = @sm_payment.bene_account_no
+          %tr
+            %td.label Beneficiary Account IFSC
+            %td.value
+              = @sm_payment.bene_account_ifsc
+          %tr
+            %td.label CBS Request Reference No
+            %td.value
+              = @sm_payment.cbs_req_ref_no
+          %tr
+            %td.label Remitter To Bene Note
+            %td.value
+              = @sm_payment.rmtr_to_bene_note
+    .header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 400px; display: inline-block;'}
+      #ticket-details
+        %h3
+          Remitter Details
+        %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+          %tr
+            %td.label Name
+            %td.value
+              = @sm_payment.rmtr_full_name
+          %tr
+            %td.label Address
+            %td.value
+              = "#{@sm_payment.rmtr_address1}"
+              %br
+              = "#{@sm_payment.rmtr_address2}"
+              %br
+              = "#{@sm_payment.rmtr_address3}"
+          %tr
+            %td.label Postal Code
+            %td.value
+              = @sm_payment.rmtr_postal_code
+          %tr
+            %td.label City
+            %td.value
+              = @sm_payment.rmtr_city
+          %tr
+            %td.label State
+            %td.value
+              = @sm_payment.rmtr_state
+          %tr
+            %td.label Country
+            %td.value
+              = @sm_payment.rmtr_country
+          %tr
+            %td.label Email
+            %td.value
+              = @sm_payment.rmtr_email_id
+          %tr
+            %td.label Mobile No
+            %td.value
+              = @sm_payment.rmtr_mobile_no
+    .header-form-main{:style=>'background-color: #F1F2F8; width: 50%; height: 400px; display: inline-block;'}
+      #ticket-details
+        %h3
+          Beneficiary Details
+        %table.table.no-border{:style=>"table-layout: fixed; width: 100%"}
+          %tr
+            %td.label Name
+            %td.value
+              = @sm_payment.bene_full_name
+          %tr
+            %td.label Address
+            %td.value
+              = "#{@sm_payment.bene_address1}"
+              %br
+              = "#{@sm_payment.bene_address2}"
+              %br
+              = "#{@sm_payment.bene_address3}"
+          %tr
+            %td.label Postal Code
+            %td.value
+              = @sm_payment.bene_postal_code
+          %tr
+            %td.label City
+            %td.value
+              = @sm_payment.bene_city
+          %tr
+            %td.label State
+            %td.value
+              = @sm_payment.bene_state
+          %tr
+            %td.label Country
+            %td.value
+              = @sm_payment.bene_country
+          %tr
+            %td.label Email
+            %td.value
+              = @sm_payment.bene_email_id
+          %tr
+            %td.label Beneficiary Mobile No
+            %td.value
+              = @sm_payment.bene_mobile_no
